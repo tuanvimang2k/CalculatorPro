@@ -8,21 +8,17 @@
 import React from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
 } from 'react-native';
 import Calculator from './src/screen/Calculator';
-
-
+import { NavigationContainer } from '@react-navigation/native';
+import BottomTabNavigation from './src/navigation/BottomTabNavigation';
 function App(): React.JSX.Element {
-  
+
   return (
-    <SafeAreaView style ={{flex:1}} >
-      <Calculator/>
+    <SafeAreaView style={{ flex: 1 }} >
+      <NavigationContainer>
+        <BottomTabNavigation />
+      </NavigationContainer>
     </SafeAreaView>
   );
 }

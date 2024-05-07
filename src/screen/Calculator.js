@@ -52,6 +52,8 @@ const Calculator = () => {
       setDisplayValue((num1/num2).toString())
     }else if(operator==='X'){
       setDisplayValue((num1*num2).toString())
+    }else if (num2=='12345'){
+      console.log('You are a hacker')
     }
 
     setOperator('')
@@ -60,11 +62,7 @@ const Calculator = () => {
   }
   return (
     <View style={[styles.lightContainer, isDarkMode ? { backgroundColor: 'black' } : null]}>
-      {/* TEXT TO TOGGLE TO DARK MODE
-      <TouchableOpacity onPress={toggleDarkMode}>
-        <Text style={[{marginRight:240, paddingTop:10},isDarkMode ? { color: 'white'}:{color:'black'}]} >Toggle Dark Mode</Text>
-      </TouchableOpacity> */}
-
+   
       <TouchableOpacity onPress={() => { toggleImage(); toggleDarkMode(); }}>
           {isImage1 ? (
             <Image
