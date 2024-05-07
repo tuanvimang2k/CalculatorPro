@@ -13,6 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import StackScreen from './src/stack/StackScreen';
 import { HomeProvider } from './src/context/HomeProvider';
 import AppNavigation from './src/navigation/AppNavigtion';
+import { ModalPortal } from 'react-native-modals';
 function App(): React.JSX.Element {
 
   return (
@@ -24,6 +25,7 @@ function App(): React.JSX.Element {
       </HomeProvider> */}
       <HomeProvider>
         <AppNavigation />
+        <ModalPortal />
       </HomeProvider>
     </SafeAreaView>
   );

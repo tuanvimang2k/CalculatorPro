@@ -1,0 +1,91 @@
+import { StyleSheet, Text, View, TextInput, Alert } from 'react-native'
+import React, { useState,useContext } from 'react'
+import { Modal, ModalContent } from 'react-native-modals';
+import { Button } from 'react-native'
+import { HomeContext } from '../context/HomeProvider'
+const DialogChangePass = ({ visible, setVisible }) => {
+    const [oldPass, setOldPass] = useState('')
+    const [newPass, setNewPass] = useState('')
+    const [confirmPass, setConfirmPass] = useState('')
+    const {password,savePassword} = useContext(HomeContext)
+    return (
+        <View style={styles.container}>
+            <Modal
+                visible={visible}
+                onTouchOutside={() => {
+                    setVisible(!visible);
+                }}
+            >
+                <ModalContent>
+                    <TextInput
+                        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                        placeholder="Old Password"
+                        onChangeText={text => {
+                            if (isNaN(text)) {
+                                Alert.alert('Invalid input', 'Please enter a numeric value')
+                            } else if (text.includes(' ')) {
+                                Alert.alert('Invalid input', 'Spaces are not allowed')
+                            } else {
+                                setOldPass(text)
+                            }
+                        }}
+                        value={oldPass}
+                        keyboardType="numeric"
+                    />
+                    <TextInput
+                        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                        placeholder="New Password"
+                        onChangeText={text => {
+                            if (isNaN(text)) {
+                                Alert.alert('Invalid input', 'Please enter a numeric value')
+                            } else if (text.includes(' ')) {
+                                Alert.alert('Invalid input', 'Spaces are not allowed')
+                            } else {
+                                setNewPass(text)
+                            }
+                        }}
+                        value={newPass}
+                        keyboardType="numeric"
+                    />
+                    <TextInput
+                        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                        placeholder="Confirm Password"
+                        onChangeText={text => {
+                            if (isNaN(text)) {
+                                Alert.alert('Invalid input', 'Please enter a numeric value')
+                            } else if (text.includes(' ')) {
+                                Alert.alert('Invalid input', 'Spaces are not allowed')
+                            } else {
+                                setConfirmPass(text)
+                            }
+                        }}
+                        value={confirmPass}
+                        keyboardType="numeric"
+                    />
+                    <Button
+                        title='Save'
+                        onPress={() => {
+                            if (oldPass === '' || newPass === '' || confirmPass === '') {
+                                Alert.alert('Invalid input', 'Please fill all fields')
+                            }else if(oldPass !== password){
+                                Alert.alert('Invalid input', 'Old password is incorrect')
+                            }else if (newPass !== confirmPass) {
+                                Alert.alert('Invalid input', 'New password and confirm password does not match')
+                            } else {
+                               
+                                savePassword(newPass)
+                                setVisible(!visible)
+                                Alert.alert('Success', 'Password has been changed')
+                            }
+                             
+                        }}
+                    />
+                </ModalContent>
+            </Modal>
+        </View>
+    )
+}
+
+export default DialogChangePass
+
+const styles = StyleSheet.create({})

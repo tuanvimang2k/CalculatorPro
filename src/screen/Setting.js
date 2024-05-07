@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity,Alert } from 'react-native'
-import React from 'react'
+import React ,{useState} from 'react'
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import DialogChangePass from '../component/DialogChangePass';
 const Setting = () => {
-
+  const [visible, setVisible] = useState(false);
   const ButtonItem = ({ iconName, iconType, text, onPress }) => (
     <TouchableOpacity style={styles.item} onPress={onPress}>
       {iconType === 'AntDesign' && <AntDesign name={iconName} size={30} color="#ff9500" />}
@@ -13,10 +14,9 @@ const Setting = () => {
       </View>
     </TouchableOpacity>
   );
-
   const data = [
     { iconName: 'lock1', iconType: 'AntDesign', text: 'Security Locks', onPress: () => console.log('Security Locks')},
-    { iconName: 'lock-reset', iconType: 'MaterialCommunityIcons', text: 'Password Recovery', onPress: () => {} },
+    { iconName: 'lock-reset', iconType: 'MaterialCommunityIcons', text: 'Password Recovery', onPress: () => setVisible(!visible) },
     { iconName: 'smileo', iconType: 'AntDesign', text: 'Hack Monitoring', onPress: () => console.log('Hack Monitoring pressed') },
     { iconName: 'bells', iconType: 'AntDesign', text: 'Panic Switch', onPress: () => console.log('Panic Switch pressed') },
     { iconName: 'aliwangwang-o1', iconType: 'AntDesign', text: 'Disguise Mode', onPress: () => console.log('Disguise Mode pressed') },
@@ -39,6 +39,7 @@ const Setting = () => {
       {data.map((item, index) => (
         <ButtonItem key={index} iconName={item.iconName} iconType={item.iconType} text={item.text} onPress={item.onPress} />
       ))}
+      <DialogChangePass visible={visible} setVisible={setVisible} /> 
     </View>
   )
 }
