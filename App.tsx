@@ -9,16 +9,22 @@ import React from 'react';
 import {
   SafeAreaView,
 } from 'react-native';
-import Calculator from './src/screen/Calculator';
 import { NavigationContainer } from '@react-navigation/native';
-import BottomTabNavigation from './src/navigation/BottomTabNavigation';
+import StackScreen from './src/stack/StackScreen';
+import { HomeProvider } from './src/context/HomeProvider';
+import AppNavigation from './src/navigation/AppNavigtion';
 function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={{ flex: 1 }} >
-      <NavigationContainer>
-        <BottomTabNavigation />
-      </NavigationContainer>
+      {/* <HomeProvider>
+        <NavigationContainer>
+          <StackScreen />
+        </NavigationContainer>
+      </HomeProvider> */}
+      <HomeProvider>
+        <AppNavigation />
+      </HomeProvider>
     </SafeAreaView>
   );
 }

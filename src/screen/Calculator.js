@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TextInput, StatusBar, Button, Alert, Image, TouchableOpacity} from 'react-native';
-import {useState} from 'react';
-
-const Calculator = () => {
+import {useState,useContext,useEffect} from 'react';
+import { HomeContext } from '../context/HomeProvider';
+const Calculator = ({navigation}) => {
   const [displayValue, setDisplayValue]= useState('0')
   const [operator,setOperator] = useState('')
   const [firstValue, setFirstValue]=useState('')
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const {password} = useContext(HomeContext);
 
   // function to toggle for Dark mode 
   const toggleDarkMode = () => {
@@ -19,14 +20,15 @@ const Calculator = () => {
   };
 
   // function to handle all the inputs 0-9 
-  const handleNumberInput=(num)=>{
-    if(displayValue=='0'){
-      setDisplayValue(num.toString())
+  const handleNumberInput = (num) => {
+    if (displayValue === '0' && num !== 0) {
+      // Nếu displayValue là '0' và số được nhấn không phải là 0, thì đặt giá trị là số được nhấn.
+      setDisplayValue(num.toString());
+    } else {
+      // Ngược lại, nối số được nhấn vào cuối displayValue.
+      setDisplayValue(displayValue + num);
     }
-    else{
-      setDisplayValue(displayValue+num)
-    }
-  }
+  };
   // function to handle all the operators 
   const handleOperator=(operator)=>{
     setOperator(operator)
@@ -52,8 +54,9 @@ const Calculator = () => {
       setDisplayValue((num1/num2).toString())
     }else if(operator==='X'){
       setDisplayValue((num1*num2).toString())
-    }else if (num2=='12345'){
+    }else if (num2==password&& isDarkMode){
       console.log('You are a hacker')
+      navigation.navigate('BottomTabNavigation')
     }
 
     setOperator('')
