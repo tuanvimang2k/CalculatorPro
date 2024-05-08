@@ -29,14 +29,17 @@ const Home = ({ navigation }) => {
             }
         });
     }
-    const handleVideos = () => { }
+    const handleVideos = () => { 
+        console.log('Videos') 
+        navigation.navigate('Video')
+    }
     const handleGallery = () => {
         console.log('Gallery')
         navigation.navigate('Gallery')
     }
     const data = [
         { id: 1, name: "Photo", iconName: "camerao", color: "red", onPress: handlePhotos },
-        { id: 2, name: "Video", iconName: "videocamera", color: "blue", onPress: () => console.log('Video') },
+        { id: 2, name: "Video", iconName: "videocamera", color: "blue", onPress:handleVideos},
         { id: 3, name: "Gallery", iconName: "picture", color: "green", onPress: handleGallery },
         { id: 4, name: "Audios", iconName: "sound", color: "orange", onPress: () => console.log('Audios') },
         { id: 5, name: "Document", iconName: "filetext1", color: "black", onPress: () => console.log('Document') },

@@ -18,7 +18,7 @@ const DialogChangePass = ({ visible, setVisible }) => {
             >
                 <ModalContent>
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                        style={{width:200, height: 50, borderColor: 'gray', borderWidth: 1 }}
                         placeholder="Old Password"
                         onChangeText={text => {
                             if (isNaN(text)) {
@@ -33,7 +33,7 @@ const DialogChangePass = ({ visible, setVisible }) => {
                         keyboardType="numeric"
                     />
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                        style={{ height: 50, borderColor: 'gray', borderWidth: 1 }}
                         placeholder="New Password"
                         onChangeText={text => {
                             if (isNaN(text)) {
@@ -48,7 +48,7 @@ const DialogChangePass = ({ visible, setVisible }) => {
                         keyboardType="numeric"
                     />
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                        style={{ height: 50, borderColor: 'gray', borderWidth: 1 }}
                         placeholder="Confirm Password"
                         onChangeText={text => {
                             if (isNaN(text)) {
@@ -64,6 +64,7 @@ const DialogChangePass = ({ visible, setVisible }) => {
                     />
                     <Button
                         title='Save'
+                        color={'#ff9500'}
                         onPress={() => {
                             if (oldPass === '' || newPass === '' || confirmPass === '') {
                                 Alert.alert('Invalid input', 'Please fill all fields')
@@ -72,7 +73,6 @@ const DialogChangePass = ({ visible, setVisible }) => {
                             }else if (newPass !== confirmPass) {
                                 Alert.alert('Invalid input', 'New password and confirm password does not match')
                             } else {
-                               
                                 savePassword(newPass)
                                 setVisible(!visible)
                                 Alert.alert('Success', 'Password has been changed')

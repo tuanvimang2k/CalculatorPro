@@ -1,24 +1,28 @@
 import React from 'react';
-import { View, FlatList, Image, Dimensions, TouchableOpacity, Text } from 'react-native';
+import { View, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
-const ImageList = ({ route, navigation }) => {
+import Video from 'react-native-video';
+
+const VideoList = ({ route, navigation }) => {
     const { data, initialIndex } = route.params;
     const { width, height } = Dimensions.get('window');
 
     const renderItem = ({ item }) => {
         return (
             <View style={{ width, height }}>
-                <Image
+                <Video
                     source={{ uri: `file://${item}` }}
-                    style={{ width, height, resizeMode: 'contain' }}
+                    style={{ width, height }}
+                    resizeMode="contain"
+                    controls={true}
                 />
             </View>
         );
     };
 
     const getItemLayout = (data, index) => ({
-        length: width, // Chiều dài của mỗi mục là chiều rộng của màn hình
-        offset: width * index, // Vị trí của mục trong danh sách
+        length: width,
+        offset: width * index,
         index,
     });
 
@@ -34,10 +38,10 @@ const ImageList = ({ route, navigation }) => {
                 pagingEnabled
                 keyExtractor={(item, index) => index.toString()}
                 initialScrollIndex={initialIndex}
-                getItemLayout={getItemLayout} // Định nghĩa phương thức getItemLayout
+                getItemLayout={getItemLayout}
             />
         </View>
     );
 };
 
-export default ImageList;
+export default VideoList;

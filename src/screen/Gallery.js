@@ -3,61 +3,61 @@ import React, { useEffect, useState } from 'react';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import { launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
-
+import Video from 'react-native-video';
 const Gallery = ({ navigation }) => {
-    const [imagePaths, setImagePaths] = useState([]);
+    const [mediaPaths, setMediaPaths] = useState([]);
 
     useEffect(() => {
-        readSavedImages();
+        readSavedMedia();
     }, []);
 
-    const readSavedImages = async () => {
+    const readSavedMedia = async () => {
         try {
             const directoryPath = RNFS.DocumentDirectoryPath;
             const fileNames = await RNFS.readdir(directoryPath);
-            const imageFiles = fileNames.filter(fileName => fileName.endsWith('.jpg'));
-            const imagePaths = imageFiles.map(fileName => `${directoryPath}/${fileName}`);
-            setImagePaths(imagePaths);
+            const mediaFiles = fileNames.filter(fileName => fileName.endsWith('.jpg') || fileName.endsWith('.mp4'));
+            const mediaPaths = mediaFiles.map(fileName => `${directoryPath}/${fileName}`);
+            setMediaPaths(mediaPaths);
         } catch (error) {
-            console.error('Lỗi khi đọc danh sách ảnh:', error);
+            console.error('Error reading media list:', error);
         }
     };
 
     const handleChoosePhoto = () => {
-        launchImageLibrary({ mediaType: 'photo', selectionLimit: 0 }, response => {
+        launchImageLibrary({ mediaType: 'mixed', selectionLimit: 0 }, response => {
             if (!response.didCancel) {
-                const selectedImageUris = response.assets.map(asset => asset.uri);
-                saveImagesToApp(selectedImageUris);
+                const selectedMediaUris = response.assets.map(asset => asset.uri);
+                saveMediaToApp(selectedMediaUris);
             }
         });
     };
 
-    const saveImagesToApp = async imageUris => {
+    const saveMediaToApp = async mediaUris => {
         try {
-            for (const uri of imageUris) {
-                const newFilePath = RNFS.DocumentDirectoryPath + `/${Date.now()}.jpg`;
-                const imageData = await RNFS.readFile(uri, 'base64');
-                await RNFS.writeFile(newFilePath, imageData, 'base64');
+            for (const uri of mediaUris) {
+                const newFilePath = RNFS.DocumentDirectoryPath + `/${Date.now()}.${uri.endsWith('.mp4') ? 'mp4' : 'jpg'}`;
+                const mediaData = await RNFS.readFile(uri, 'base64');
+                await RNFS.writeFile(newFilePath, mediaData, 'base64');
             }
-            readSavedImages();
-            console.log('Đã lưu các ảnh vào ứng dụng thành công.');
+            readSavedMedia();
+            console.log('Successfully saved media to app.');
         } catch (error) {
-            console.error('Lỗi khi lưu các ảnh vào ứng dụng:', error);
+            console.error('Error saving media to app:', error);
         }
     };
 
-    const handleImagePress = (imagePath, index) => {
+    const handleMediaPress = (mediaPath, index) => {
         Alert.alert(
             'Chọn hành động',
-            'Bạn muốn làm gì với ảnh này?',
+            'Bạn muốn làm gì với phương tiện này?',
             [
                 {
-                    text: 'Xem ảnh',
-                    onPress: () => viewImage(index),
+                    text: 'Xem phương tiện',
+                    onPress: () => viewMedia(mediaPath, index),
                 },
                 {
-                    text: 'Xóa ảnh',
-                    onPress: () => confirmDeleteImage(imagePath),
+                    text: 'Xóa phương tiện',
+                    onPress: () => confirmDeleteMedia(mediaPath),
                     style: 'destructive',
                 },
                 {
@@ -69,14 +69,14 @@ const Gallery = ({ navigation }) => {
         );
     };
 
-    const viewImage = index => {
-        navigation.navigate('ImageList', { data: imagePaths, initialIndex: index });
+    const viewMedia = (mediaPath, index) => {
+        navigation.navigate('MediaList', { data: mediaPaths, initialIndex: index });
     };
 
-    const confirmDeleteImage = imagePath => {
+    const confirmDeleteMedia = mediaPath => {
         Alert.alert(
-            'Xóa ảnh',
-            'Bạn có chắc chắn muốn xóa ảnh này?',
+            'Xóa phương tiện',
+            'Bạn có chắc chắn muốn xóa phương tiện này?',
             [
                 {
                     text: 'Hủy',
@@ -84,34 +84,43 @@ const Gallery = ({ navigation }) => {
                 },
                 {
                     text: 'Đồng ý',
-                    onPress: () => deleteImage(imagePath),
+                    onPress: () => deleteMedia(mediaPath),
                 },
             ],
             { cancelable: true }
         );
     };
 
-    const deleteImage = async imagePath => {
+    const deleteMedia = async mediaPath => {
         try {
-            await RNFS.unlink(imagePath);
-            readSavedImages();
-            console.log('Đã xóa ảnh thành công.');
+            await RNFS.unlink(mediaPath);
+            readSavedMedia();
+            console.log('Đã xóa phương tiện thành công.');
         } catch (error) {
-            console.error('Lỗi khi xóa ảnh:', error);
+            console.error('Lỗi khi xóa phương tiện:', error);
         }
     };
 
-    const renderImageItem = ({ item, index }) => (
-        <TouchableOpacity style={styles.imageContainer} onPress={() => handleImagePress(item, index)}>
-            <Image source={{ uri: `file://${item}` }} style={styles.image} />
+    const renderMediaItem = ({ item, index }) => (
+        <TouchableOpacity style={styles.mediaContainer} onPress={() => handleMediaPress(item, index)}>
+            {item.endsWith('.mp4') ? (
+                <Video source={
+                    { uri: `file://${item}` }} 
+                    style={styles.media}
+                    resizeMode="contain"
+                    controls={true}
+                     />
+            ) : (
+                <Image source={{ uri: `file://${item}` }} style={styles.media} />
+            )}
         </TouchableOpacity>
     );
 
     return (
         <View style={styles.container}>
             <FlatList
-                data={imagePaths}
-                renderItem={renderImageItem}
+                data={mediaPaths}
+                renderItem={renderMediaItem}
                 keyExtractor={(item, index) => index.toString()}
                 numColumns={2}
             />
@@ -129,11 +138,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
-    imageContainer: {
+    mediaContainer: {
         flex: 1,
         margin: 5,
     },
-    image: {
+    media: {
         width: '100%',
         aspectRatio: 1,
         borderRadius: 8,
