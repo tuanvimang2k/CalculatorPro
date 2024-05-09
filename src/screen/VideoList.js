@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import Video from 'react-native-video';
@@ -6,6 +6,7 @@ import Video from 'react-native-video';
 const VideoList = ({ route, navigation }) => {
     const { data, initialIndex } = route.params;
     const { width, height } = Dimensions.get('window');
+    const [isPlaying, setIsPlaying] = useState(false); // Trạng thái phát video
 
     const renderItem = ({ item }) => {
         return (
@@ -14,7 +15,9 @@ const VideoList = ({ route, navigation }) => {
                     source={{ uri: `file://${item}` }}
                     style={{ width, height }}
                     resizeMode="contain"
-                    controls={true}
+                    controls={false} // Kiểm soát việc hiển thị controls
+                    // paused={!isPlaying} // Kiểm soát việc phát video dựa trên trạng thái phát
+                    // onLoad={() => setIsPlaying(true)} // Khi video được load, tự động phát
                 />
             </View>
         );

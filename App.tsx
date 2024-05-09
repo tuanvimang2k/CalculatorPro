@@ -18,11 +18,6 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={{ flex: 1 }} >
-      {/* <HomeProvider>
-        <NavigationContainer>
-          <StackScreen />
-        </NavigationContainer>
-      </HomeProvider> */}
       <HomeProvider>
         <AppNavigation />
         <ModalPortal />

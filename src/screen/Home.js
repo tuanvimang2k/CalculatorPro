@@ -29,13 +29,37 @@ const Home = ({ navigation }) => {
             }
         });
     }
-    const handleVideos = () => { 
-        console.log('Videos') 
-        navigation.navigate('Video')
-    }
+    const handleVideos = () => {
+        console.log('Videos');
+        const saveVideoToApp = async uri => {
+            try {
+                const newFilePath = RNFS.DocumentDirectoryPath + `/${Date.now()}.mp4`;
+                await RNFS.copyFile(uri, newFilePath);
+                console.log('Đã lưu video vào ứng dụng thành công.');
+            } catch (error) {
+                console.error('Lỗi khi lưu video vào ứng dụng:', error);
+            }
+        };
+        const options = {
+            mediaType: 'video',
+            videoQuality: 'medium',
+        };
+    
+        launchCamera(options, response => {
+            console.log('Response:', response);
+            if (!response.didCancel) {
+                const uri = response.assets[0].uri;
+                console.log('uri', uri);
+                saveVideoToApp(uri);
+            } else {
+                console.log('Video was cancelled');
+            }
+        });
+    };
     const handleGallery = () => {
         console.log('Gallery')
-        navigation.navigate('Gallery')
+        // navigation.navigate('Gallery')
+        navigation.navigate('TopTabGallery')
     }
     const data = [
         { id: 1, name: "Photo", iconName: "camerao", color: "red", onPress: handlePhotos },

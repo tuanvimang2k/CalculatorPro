@@ -72,8 +72,8 @@ const VideoScreen = ({ navigation }) => {
 
     const playVideo = (index) => {
         console.log('play video')
-        navigation.navigate('Video'
-            // , { data: videoPaths, initialIndex: index }
+        navigation.navigate('VideoList'
+            , { data: videoPaths, initialIndex: index }
         );
     };
 
@@ -113,6 +113,8 @@ const VideoScreen = ({ navigation }) => {
                     style={styles.videoThumbnail}
                     resizeMode="contain"
                     controls={false}
+                    // paused={true}
+                    muted={true}
                 />
         </TouchableOpacity>
     );
