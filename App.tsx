@@ -14,6 +14,7 @@ import StackScreen from './src/stack/StackScreen';
 import { HomeProvider } from './src/context/HomeProvider';
 import AppNavigation from './src/navigation/AppNavigtion';
 import { ModalPortal } from 'react-native-modals';
+import Login from './src/screen/Login';
 function App(): React.JSX.Element {
 
   return (
