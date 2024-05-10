@@ -8,7 +8,7 @@ const Calculator = ({ navigation }) => {
   const [firstValue, setFirstValue] = useState('')
   const [isDarkMode, setIsDarkMode] = useState(false);
   const { password } = useContext(HomeContext);
-  const [imgLink, setImgLink] = useState(null)
+  const [imgLink, setImgLink] = useState(require('../../assets/imgs/moon.png'))
   useEffect(() => {
     if (isDarkMode) {
       setImgLink(require('../../assets/imgs/moon.png'))

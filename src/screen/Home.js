@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity ,Alert} from 'react-native';
 import React from 'react';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import { launchCamera } from 'react-native-image-picker';
@@ -61,18 +61,30 @@ const Home = ({ navigation }) => {
         // navigation.navigate('Gallery')
         navigation.navigate('TopTabGallery')
     }
+    const Dialog = () => {
+        Alert.alert(
+            'Notification',
+            'Feature in Development',
+            [
+                {
+                    text: 'OK',
+                    onPress: () => console.log('OK Pressed')
+                }
+            ],
+            { cancelable: false }
+        );
+    }
     const data = [
         { id: 1, name: "Photo", iconName: "camerao", color: "red", onPress: handlePhotos },
         { id: 2, name: "Video", iconName: "videocamera", color: "blue", onPress:handleVideos},
         { id: 3, name: "Gallery", iconName: "picture", color: "green", onPress: handleGallery },
-        { id: 4, name: "Audios", iconName: "sound", color: "orange", onPress: () => console.log('Audios') },
-        { id: 5, name: "Document", iconName: "filetext1", color: "black", onPress: () => console.log('Document') },
-        { id: 6, name: "Contacts", iconName: "contacts", color: "pink", onPress: () => console.log('Contacts') },
-        { id: 7, name: "Wallet", iconName: "wallet", color: "purple", onPress: () => console.log('Wallet') },
-        { id: 8, name: "Notes", iconName: "book", color: "blue", onPress: () => console.log('Notes') },
-        { id: 9, name: "To Dos", iconName: "profile", color: "green", onPress: () => console.log('To Dos') },
-        { id: 10, name: "Wifi", iconName: "wifi", color: "yellow", onPress: () => console.log('Wifi') },
-
+        { id: 4, name: "Audios", iconName: "sound", color: "orange", onPress:Dialog},
+        { id: 5, name: "Document", iconName: "filetext1", color: "black", onPress: Dialog },
+        { id: 6, name: "Contacts", iconName: "contacts", color: "pink", onPress: Dialog},
+        { id: 7, name: "Wallet", iconName: "wallet", color: "purple", onPress: Dialog},
+        { id: 8, name: "Notes", iconName: "book", color: "blue", onPress: Dialog},
+        { id: 9, name: "To Dos", iconName: "profile", color: "green", onPress: Dialog },
+        { id: 10, name: "Wifi", iconName: "wifi", color: "yellow", onPress: Dialog },
     ];
 
     const renderItem = ({ item }) => {

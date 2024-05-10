@@ -6,7 +6,7 @@ export const HomeContext = createContext();
 export const HomeProvider = props => {
     const { children } = props;
     const [password, setPassword] = useState(null);
-    const [isLogin, setIsLogin] = useState(false);
+    const [user, setUser] = useState(null);
     const getPassword = async () => {
         try {
             const storedPassword = await AsyncStorage.getItem('@password');
@@ -19,23 +19,6 @@ export const HomeProvider = props => {
             console.log(error.message);
         }
     };
-    const checkLogin = async () => {
-        try {
-            const isLogin = await AsyncStorage.getItem('@isLogin');
-            if (isLogin !== null) {
-                setIsLogin(isLogin);
-            } else {
-                setIsLogin(false);
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
-    useEffect(() => {
-        getPassword();
-        checkLogin();
-    
-    }, []);
     const savePassword = async newPassword => {
         try {
             await AsyncStorage.setItem('@password', newPassword);
@@ -44,16 +27,35 @@ export const HomeProvider = props => {
             console.log(error.message);
         }
     };
-    const SaveLogin = async (newIsLogin) => {
+    const getUser = async () => { 
         try {
-            await AsyncStorage.setItem('@isLogin', newIsLogin);
-            setIsLogin(newIsLogin);
+            const storedIdUser = await AsyncStorage.getItem('@user');
+            if (storedIdUser !== null) {
+                setUser(storedIdUser);
+            } else {
+                // setIdUser('00000');
+            }
         } catch (error) {
             console.log(error.message);
         }
-    };
+    }
+    const saveUser = async newIdUser => {
+        try {
+            await AsyncStorage.setItem('@user', newIdUser);
+            setUser(newIdUser);
+        }
+        catch (error) {
+            console.log(error.message);
+        }
+    }
+    useEffect(() => {
+        getPassword();
+        getUser();
+    }, []);
+    
+  
     return (
-        <HomeContext.Provider value={{ password, savePassword,isLogin,SaveLogin }}>
+        <HomeContext.Provider value={{ password, savePassword, user,saveUser}}>
             {children}
         </HomeContext.Provider>
     );

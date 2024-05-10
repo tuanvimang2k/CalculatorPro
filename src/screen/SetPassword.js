@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity } from 'react-native'
 import React, { useState,useContext } from 'react'
 import { HomeContext } from '../context/HomeProvider'
+import { updateLocalPass } from '../service/user'
 const SetPassword = () => {
     const [txtpassword, setTxtPassword] = useState('')
-    const {savePassword} = useContext(HomeContext)
+    const {savePassword,user} = useContext(HomeContext)
     const handlePasswordChange = (text) => {
         // Check if the new text is numeric
         if (isNaN(text)) {
@@ -14,7 +15,15 @@ const SetPassword = () => {
             setTxtPassword(text)
         }
     }
-
+    const handleSetLocalpass = async () => {
+        try {
+            const response = await updateLocalPass(user, txtpassword)
+            savePassword(txtpassword)
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <View style={styles.container}>
             <View style={styles.txtInputView}>
@@ -28,7 +37,7 @@ const SetPassword = () => {
                 />
                 <View style={{ alignItems: 'center' }}>
                     <TouchableOpacity 
-                    onPress={() => { savePassword(txtpassword)}}
+                    onPress={() => handleSetLocalpass()}
                     style={styles.btnSave}
                     >
                         <Text style={styles.txtSave}>save</Text>

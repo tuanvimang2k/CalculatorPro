@@ -1,14 +1,41 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
-
+import { login } from '../service/user';
+import { HomeContext } from '../context/HomeProvider';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  useEffect(() => {
-    console.log('>>>>>>>>>>>>>>>>>')
-    console.log('username',username)
-    console.log('password',password) 
-  },[username,password])
+  const {saveUser,savePassword,user} = useContext(HomeContext);
+  const [loginStatus, setLoginStatus] = useState(false);
+  // useEffect(() => {
+  //   console.log('>>>>>>>>>>>>>>>>>')
+  //   console.log('username',username)
+  //   console.log('password',password) 
+  // },[username,password])
+  const handleLogin = async () => {
+    try {
+      setLoginStatus(true);
+      const response = await login(username,password);
+      console.log(response); 
+      if(response.data){
+        saveUser(response.data._id);
+        console.log('user',user)
+      }
+      if(response.data.localPass){
+        savePassword(response.data.localPass);
+        console.log('password',response.data.localPass)
+      }
+      setLoginStatus(false);
+      // console.log('>>>>>>>>>>>>>>>>>>>>')
+      // console.log('response',response);
+      // console.log('>>>>>>>>>>>>>>>>>>>>')
+      // console.log('user',user)
+      // console.log('>>>>>>>>>>>>>>>>>>>>')
+      // console.log('password',password )
+    }catch (error) {
+      console.log(error);
+    }
+  }
   const handleOnchange = (text,setText) => {
     setText(text);
   }
@@ -33,8 +60,8 @@ const Login = () => {
         borderRadius={20}
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => { }} style={styles.registerButton}>
-          <Text style={styles.registerText}>Login</Text>
+        <TouchableOpacity onPress={() => handleLogin()} style={styles.registerButton}>
+          <Text style={styles.registerText}>{loginStatus?'Loading':"Login"}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => { }} style={styles.registerButton}>
           <Text style={styles.registerText}>Register</Text>
