@@ -9,7 +9,7 @@ const AppNavigation = () => {
     console.log("user",user);
     return (
         <NavigationContainer>
-            {user == null ? <LoginAndRegisterStack /> : password ? <StackScreen /> : <SetPassword />}
+            {user?password?<StackScreen/>:<SetPassword/>:<LoginAndRegisterStack/>}
         </NavigationContainer>
     );
 };
