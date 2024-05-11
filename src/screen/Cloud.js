@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React ,{useContext,useState} from 'react'
 import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
+import { HomeContext } from '../context/HomeProvider';
 const Cloud = () => {
+  const {logout} = useContext(HomeContext);
   const ButtonItem = ({ iconName, iconType, text, onPress }) => (
     <TouchableOpacity style={styles.item} onPress={onPress}>
       {iconType === 'AntDesign' && <AntDesign name={iconName} size={30} color="#ff9500" />}
@@ -14,9 +16,9 @@ const Cloud = () => {
   );
   const data = [
     { iconName: 'staro', iconType: 'AntDesign', text: 'Rate and Review', onPress: () => console.log('Rate and Review') },
-    { iconName: 'infocirlceo', iconType: 'AntDesign', text: 'Licence Agrement', onPress: console.log('Licence Agrement') },
+    { iconName: 'infocirlceo', iconType: 'AntDesign', text: 'Licence Agrement', onPress: () => console.log('Licence') },
     { iconName: 'Safety', iconType: 'AntDesign', text: 'Privacy Policy', onPress: () => console.log('Privacy Policy') },
-    { iconName: 'infocirlceo', iconType: 'AntDesign', text: 'About', onPress: () => console.log('About') },
+    { iconName: 'logout', iconType: 'AntDesign', text: 'Logout', onPress: () => logout() },
   ];
   return (
     <View style={styles.container}>

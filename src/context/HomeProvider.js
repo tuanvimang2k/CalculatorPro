@@ -7,6 +7,12 @@ export const HomeProvider = props => {
     const { children } = props;
     const [password, setPassword] = useState(null);
     const [user, setUser] = useState(null);
+    const logout =async () => {
+        await AsyncStorage.removeItem('@password');
+        await AsyncStorage.removeItem('@user');
+        setPassword(null);
+        setUser(null);
+    };
     const getPassword = async () => {
         try {
             const storedPassword = await AsyncStorage.getItem('@password');
@@ -55,7 +61,7 @@ export const HomeProvider = props => {
     
   
     return (
-        <HomeContext.Provider value={{ password, savePassword, user,saveUser}}>
+        <HomeContext.Provider value={{ password, savePassword, user,saveUser,logout}}>
             {children}
         </HomeContext.Provider>
     );

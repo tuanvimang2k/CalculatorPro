@@ -3,15 +3,13 @@ import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'rea
 import { login } from '../service/user';
 import { HomeContext } from '../context/HomeProvider';
 const Login = () => {
+  useEffect(() => {
+    console.log('Login Screen user',user);
+  }, [user]);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const {saveUser,savePassword,user} = useContext(HomeContext);
   const [loginStatus, setLoginStatus] = useState(false);
-  // useEffect(() => {
-  //   console.log('>>>>>>>>>>>>>>>>>')
-  //   console.log('username',username)
-  //   console.log('password',password) 
-  // },[username,password])
   const handleLogin = async () => {
     try {
       setLoginStatus(true);
@@ -26,12 +24,6 @@ const Login = () => {
         console.log('password',response.data.localPass)
       }
       setLoginStatus(false);
-      // console.log('>>>>>>>>>>>>>>>>>>>>')
-      // console.log('response',response);
-      // console.log('>>>>>>>>>>>>>>>>>>>>')
-      // console.log('user',user)
-      // console.log('>>>>>>>>>>>>>>>>>>>>')
-      // console.log('password',password )
     }catch (error) {
       console.log(error);
     }
