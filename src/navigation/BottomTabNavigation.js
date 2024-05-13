@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from '../screen/Home';
 import Setting from '../screen/Setting';
 import More from '../screen/More';
 import Cloud from '../screen/Cloud';
@@ -9,35 +8,21 @@ import HomeStack from '../stack/HomeStack';
 import {AppState} from 'react-native';
 const Tab = createBottomTabNavigator();
 const BottomTabNavigation = ({navigation}) => {
-  const [currentRouteName, setCurrentRouteName] = useState('');
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('state', e => {
-      const routeName = e.data.state.routes[e.data.state.index].name;
-      setCurrentRouteName(routeName);
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-  console.log(currentRouteName);
   useEffect(() => {
     const handleAppStateChange = nextAppState => {
       if (nextAppState === 'background' || nextAppState === 'inactive') {
-        // if (currentRouteName !== 'BottomTabNavigation') {
-          console.log('App has moved to the background or become inactive');
-          navigation.navigate('Calculator');
-        // }
+        console.log('App has moved to the background or become inactive');
+        navigation.navigate('Calculator');
       }
     };
-
     const appStateSubscription = AppState.addEventListener(
       'change',
       handleAppStateChange,
     );
-
     return () => {
       appStateSubscription.remove();
     };
-  }, [navigation, currentRouteName]);
+  }, []);
   return (
     <Tab.Navigator
       screenOptions={{
