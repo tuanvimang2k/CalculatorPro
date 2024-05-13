@@ -7,7 +7,10 @@ export const HomeProvider = props => {
     const { children } = props;
     const [password, setPassword] = useState(null);
     const [user, setUser] = useState(null);
-    const logout =async () => {
+    const [isOpenVideo, setIsOpenVideo] = useState(false);
+    const [isOpenPhoto, setIsOpenPhoto] = useState(false);
+    const [isOpenGallery, setIsOpenGallery] = useState(false);
+    const logout = async () => {
         await AsyncStorage.removeItem('@password');
         await AsyncStorage.removeItem('@user');
         setPassword(null);
@@ -33,7 +36,7 @@ export const HomeProvider = props => {
             console.log(error.message);
         }
     };
-    const getUser = async () => { 
+    const getUser = async () => {
         try {
             const storedIdUser = await AsyncStorage.getItem('@user');
             if (storedIdUser !== null) {
@@ -58,10 +61,16 @@ export const HomeProvider = props => {
         getPassword();
         getUser();
     }, []);
-    
-  
+
+
     return (
-        <HomeContext.Provider value={{ password, savePassword, user,saveUser,logout}}>
+        <HomeContext.Provider value={{
+            password, savePassword,
+            user, saveUser, logout,
+            isOpenVideo, setIsOpenVideo,
+            isOpenPhoto, setIsOpenPhoto,
+            isOpenGallery, setIsOpenGallery
+        }}>
             {children}
         </HomeContext.Provider>
     );
