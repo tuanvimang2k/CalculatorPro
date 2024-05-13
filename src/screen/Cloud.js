@@ -1,9 +1,26 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity,Alert } from 'react-native'
-import React ,{useContext,useState} from 'react'
+import React ,{useContext,useState,useEffect} from 'react'
 import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import { HomeContext } from '../context/HomeProvider';
+import { getUserById ,getAllUsers} from '../service/user';
 const Cloud = () => {
+  const {user} = useContext(HomeContext);
+  const [txtEmail, setTxtEmail] = useState('default email');
+  const [coin, setCoin] = useState(0);
+  useEffect(() => {
+    console.log('user cloud',user);
+    onGetUser()
+  }, [])
+  const onGetUser = async () => {
+    const response = await getUserById(user);
+    console.log('response user respone',response);
+    if(response){
+      setTxtEmail(response.user.email);
+      setCoin(response.user.coin);
+    }
+    
+  }
   const {logout} = useContext(HomeContext);
   const ButtonItem = ({ iconName, iconType, text, onPress }) => (
     <TouchableOpacity style={styles.item} onPress={onPress}>
@@ -40,13 +57,13 @@ const Cloud = () => {
         <View style={{ flexDirection: "row", alignItems: 'center' }}>
           <Image style={styles.headerImg} source={require('../../assets/imgs/avatar_icon.png')} />
           <View>
-            <Text style={styles.txtHeader}>Tuấn Vĩ</Text>
-            <Text style={styles.txtHeader}>viu@gmail.com</Text>
+            {/* <Text style={styles.txtHeader}>Tuấn Vĩ</Text> */}
+            <Text style={styles.txtHeader}>{txtEmail}</Text>
           </View>
         </View>
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <Text style={{ marginRight: 5 }}>1000</Text>
+            <Text style={{ marginRight: 5 }}>{coin}</Text>
           </View>
           <FontAwesome5 name="coins" color={'#F7C117'} size={30} />
         </View>
