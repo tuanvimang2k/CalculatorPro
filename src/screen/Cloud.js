@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity,Alert } from 'react-native'
 import React ,{useContext,useState} from 'react'
 import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
@@ -14,11 +14,25 @@ const Cloud = () => {
       </View>
     </TouchableOpacity>
   );
+  const HandleLogout = () => {
+    Alert.alert(
+      "Confirmation",
+      "Do you want to log out?",
+      [
+        {
+          text: "No",
+          style: "cancel"
+        },
+        { text: "Yes", onPress: () => logout() }
+      ],
+      { cancelable: false }
+    );
+  };
   const data = [
     { iconName: 'staro', iconType: 'AntDesign', text: 'Rate and Review', onPress: () => console.log('Rate and Review') },
     { iconName: 'infocirlceo', iconType: 'AntDesign', text: 'Licence Agrement', onPress: () => console.log('Licence') },
     { iconName: 'Safety', iconType: 'AntDesign', text: 'Privacy Policy', onPress: () => console.log('Privacy Policy') },
-    { iconName: 'logout', iconType: 'AntDesign', text: 'Logout', onPress: () => logout() },
+    { iconName: 'logout', iconType: 'AntDesign', text: 'Logout', onPress: HandleLogout },
   ];
   return (
     <View style={styles.container}>

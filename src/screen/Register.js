@@ -1,9 +1,10 @@
 import React, { useState,useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
-
-const Register = () => {
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity,Alert } from 'react-native';
+import { register } from '../service/user';
+const Register = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [registerStatus, setRegisterStatus] = useState(false);
   useEffect(() => {
     console.log('>>>>>>>>>>>>>>>>>')
     console.log('username',username)
@@ -12,6 +13,40 @@ const Register = () => {
   const handleOnchange = (text,setText) => {
     setText(text);
   }
+  const handleRegister = async () => {
+    try {
+      if (!username || !password) {
+        Alert.alert("Error", "Please enter username and password", [{ text: "OK" }]);
+        setRegisterStatus(false);
+        return;
+      }
+  
+      setRegisterStatus(true);
+      const response = await register(username, password);
+      console.log(response);
+      setRegisterStatus(false);
+  
+      if (response && response.status) {
+        Alert.alert("Success", "Registration successful", [
+          {
+            text: "OK",
+            onPress: () => {
+              setUsername("");
+              setPassword("");
+            }
+          }
+        ], { cancelable: false });
+      } else {
+        Alert.alert("Error", "Failed to register. Please try again.", [{ text: "OK" }], { cancelable: false });
+      }
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Error", "Failed to register. Please try again.", [{ text: "OK" }], { cancelable: false });
+      setRegisterStatus(false);
+    }
+  };
+  
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Register</Text>
@@ -33,10 +68,10 @@ const Register = () => {
         borderRadius={20}
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => { }} style={styles.registerButton}>
-          <Text style={styles.registerText}>Register</Text>
+        <TouchableOpacity onPress={() => handleRegister()} style={styles.registerButton}>
+          <Text style={styles.registerText}>{registerStatus?'Loading':'Register'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => { }} style={styles.registerButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.registerButton}>
           <Text style={styles.registerText}>Login</Text>
         </TouchableOpacity>
       </View>
