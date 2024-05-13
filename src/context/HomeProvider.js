@@ -13,10 +13,6 @@ export const HomeProvider = props => {
         setPassword(null);
         setUser(null);
     };
-
-    console.log('user home provider', user);
-    console.log('password home provider', password);
-
     const getPassword = async () => {
         try {
             const storedPassword = await AsyncStorage.getItem('@password');
