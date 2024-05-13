@@ -1,9 +1,9 @@
 import React, { useState, createContext, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { getUserById } from "../service/user";
 export const HomeContext = createContext();
-
 export const HomeProvider = props => {
+
     const { children } = props;
     const [password, setPassword] = useState(null);
     const [user, setUser] = useState(null);
@@ -14,6 +14,9 @@ export const HomeProvider = props => {
         setPassword(null);
         setUser(null);
     };
+    const getPremium = async () => {
+        const response = await getUserById(user);
+    }
     const getPassword = async () => {
         try {
             const storedPassword = await AsyncStorage.getItem('@password');

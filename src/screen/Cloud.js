@@ -1,27 +1,28 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity,Alert } from 'react-native'
-import React ,{useContext,useState,useEffect} from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
+import React, { useContext, useState, useEffect } from 'react'
 import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/dist/MaterialIcons';
 import { HomeContext } from '../context/HomeProvider';
-import { getUserById ,getAllUsers} from '../service/user';
+import { getUserById, getAllUsers } from '../service/user';
 const Cloud = () => {
-  const {user} = useContext(HomeContext);
+  const { user, premium } = useContext(HomeContext);
   const [txtEmail, setTxtEmail] = useState('default email');
   const [coin, setCoin] = useState(0);
   useEffect(() => {
-    console.log('user cloud',user);
+    console.log('user cloud', user);
     onGetUser()
   }, [])
   const onGetUser = async () => {
     const response = await getUserById(user);
-    console.log('response user respone',response);
-    if(response){
+    console.log('response user respone', response);
+    if (response) {
       setTxtEmail(response.user.email);
       setCoin(response.user.coin);
     }
-    
+
   }
-  const {logout} = useContext(HomeContext);
+  const { logout } = useContext(HomeContext);
   const ButtonItem = ({ iconName, iconType, text, onPress }) => (
     <TouchableOpacity style={styles.item} onPress={onPress}>
       {iconType === 'AntDesign' && <AntDesign name={iconName} size={30} color="#ff9500" />}
@@ -62,10 +63,13 @@ const Cloud = () => {
           </View>
         </View>
         <View style={{ flexDirection: 'row' }}>
-          <View style={{ flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <Text style={{ marginRight: 5 }}>{coin}</Text>
-          </View>
-          <FontAwesome5 name="coins" color={'#F7C117'} size={30} />
+          {premium == 0 ? (
+            <TouchableOpacity style={styles.btnGetFullVersion}>
+              <Text style={{ color: '#fff', textAlign: 'center' }}>Get Full Version</Text>
+            </TouchableOpacity>
+          ) : (
+            <FontAwesome5 name="coins" color={'#F7C117'} size={30} />
+          )}
         </View>
       </View>
 
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
   },
   btnGetFullVersion: {
     backgroundColor: '#ff9500',
-    padding: 10,
+    // padding: 10,
     borderRadius: 10,
     width: '50%',
   },
