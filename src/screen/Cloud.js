@@ -62,13 +62,14 @@ const Cloud = () => {
             <Text style={styles.txtHeader}>{txtEmail}</Text>
           </View>
         </View>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row',justifyContent:'flex-end' }}>
           {premium == 0 ? (
-            <TouchableOpacity style={styles.btnGetFullVersion}>
+            <TouchableOpacity 
+            style={styles.btnGetFullVersion}>
               <Text style={{ color: '#fff', textAlign: 'center' }}>Get Full Version</Text>
             </TouchableOpacity>
           ) : (
-            <FontAwesome5 name="coins" color={'#F7C117'} size={30} />
+            <MaterialIcons name="workspace-premium" color={'#F7C117'} size={30} />
           )}
         </View>
       </View>
