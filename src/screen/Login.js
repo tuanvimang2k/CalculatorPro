@@ -8,7 +8,7 @@ const Login = ({navigation}) => {
   }, [user]);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const {saveUser,savePassword,user} = useContext(HomeContext);
+  const {saveUser,savePassword,user,setPremium} = useContext(HomeContext);
   const [loginStatus, setLoginStatus] = useState(false);
   const handleLogin = async () => {
     try {
@@ -28,6 +28,10 @@ const Login = ({navigation}) => {
       if (response.data.localPass) {
         savePassword(response.data.localPass);
         console.log('password', response.data.localPass);
+      }
+      if(response.data.premium){
+        setPremium(response.data.premium);
+        console.log('premium', response.data.premium);
       }
       setLoginStatus(false);
     } catch (error) {

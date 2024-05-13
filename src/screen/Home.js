@@ -1,10 +1,17 @@
 import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity ,Alert} from 'react-native';
-import React from 'react';
+import React,{useContext} from 'react';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import { launchCamera } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
+import { HomeContext } from '../context/HomeProvider';
 const Home = ({ navigation }) => {
+    const {premium} = useContext(HomeContext);
+    console.log('premium',premium);
     const handlePhotos = () => {
+        if(premium == 0){
+            DialogPremium();
+            return;
+        }
         console.log('Photos')
         const saveImageToApp = async uri => {
             try {
@@ -30,6 +37,10 @@ const Home = ({ navigation }) => {
         });
     }
     const handleVideos = () => {
+        if(premium == 0){
+            DialogPremium();
+            return;
+        }
         console.log('Videos');
         const saveVideoToApp = async uri => {
             try {
@@ -57,6 +68,10 @@ const Home = ({ navigation }) => {
         });
     };
     const handleGallery = () => {
+        if(premium == 0){
+            DialogPremium();
+            return;
+        }
         console.log('Gallery')
         // navigation.navigate('Gallery')
         navigation.navigate('TopTabGallery')
@@ -65,6 +80,19 @@ const Home = ({ navigation }) => {
         Alert.alert(
             'Notification',
             'Feature in Development',
+            [
+                {
+                    text: 'OK',
+                    onPress: () => console.log('OK Pressed')
+                }
+            ],
+            { cancelable: false }
+        );
+    }
+    const DialogPremium = () => {
+        Alert.alert(
+            'Notification',
+            'Please upgrade to Premium to use this feature',
             [
                 {
                     text: 'OK',
