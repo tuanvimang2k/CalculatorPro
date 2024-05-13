@@ -7,7 +7,6 @@ import Cloud from '../screen/Cloud';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import HomeStack from '../stack/HomeStack';
 import {AppState} from 'react-native';
-import {useNavigationState} from '@react-navigation/native';
 const Tab = createBottomTabNavigator();
 const BottomTabNavigation = ({navigation}) => {
   const [currentRouteName, setCurrentRouteName] = useState('');
@@ -23,10 +22,10 @@ const BottomTabNavigation = ({navigation}) => {
   useEffect(() => {
     const handleAppStateChange = nextAppState => {
       if (nextAppState === 'background' || nextAppState === 'inactive') {
-        if (currentRouteName !== 'BottomTabNavigation') {
+        // if (currentRouteName !== 'BottomTabNavigation') {
           console.log('App has moved to the background or become inactive');
           navigation.navigate('Calculator');
-        }
+        // }
       }
     };
 

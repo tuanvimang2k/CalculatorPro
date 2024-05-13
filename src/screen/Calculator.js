@@ -2,13 +2,30 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TextInput, StatusBar, Button, Alert, Image, TouchableOpacity } from 'react-native';
 import { useState, useContext, useEffect } from 'react';
 import { HomeContext } from '../context/HomeProvider';
+import { useIsFocused } from '@react-navigation/native';
 const Calculator = ({ navigation }) => {
   const [displayValue, setDisplayValue] = useState('0')
   const [operator, setOperator] = useState('')
   const [firstValue, setFirstValue] = useState('')
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const { password } = useContext(HomeContext);
+  const { password,isCameraLibrary, setIsCameraLibrary } = useContext(HomeContext);
   const [imgLink, setImgLink] = useState(require('../../assets/imgs/moon.png'))
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      console.log('Screen is focused');
+      if(isCameraLibrary){
+        console.log('đã vào được đây')
+        navigation.navigate('BottomTabNavigation')
+        setIsCameraLibrary(false)
+      }
+    } else {
+      console.log('Screen is not focused');
+      // Do something else
+    }
+  }, [isFocused]);
+  
   useEffect(() => {
     if (isDarkMode) {
       setImgLink(require('../../assets/imgs/moon.png'))

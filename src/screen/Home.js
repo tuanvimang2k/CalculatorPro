@@ -5,9 +5,11 @@ import { launchCamera } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 import { HomeContext } from '../context/HomeProvider';
 const Home = ({ navigation }) => {
-    const {premium} = useContext(HomeContext);
+    const {premium,isCameraLibrary, setIsCameraLibrary} = useContext(HomeContext);
     console.log('premium',premium);
     const handlePhotos = () => {
+        setIsCameraLibrary(true);
+        // console.log('isCameraLibrary in home',isCameraLibrary)
         if(premium == 0){
             DialogPremium();
             return;

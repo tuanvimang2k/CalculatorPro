@@ -15,7 +15,7 @@ const More = () => {
   );
   const data = [
     { iconName: 'staro', iconType: 'AntDesign', text: 'Rate and Review', onPress: () => console.log('Rate and Review')},
-    { iconName: 'infocirlceo', iconType: 'AntDesign', text: 'Licence Agrement', onPress:  console.log('Licence Agrement') },
+    { iconName: 'infocirlceo', iconType: 'AntDesign', text: 'Licence Agrement', onPress: () =>  console.log('Licence Agrement') },
     { iconName: 'Safety', iconType: 'AntDesign', text: 'Privacy Policy', onPress: () => console.log('Privacy Policy') },
     { iconName: 'infocirlceo', iconType: 'AntDesign', text: 'About', onPress: () => console.log('About') },
   ];
