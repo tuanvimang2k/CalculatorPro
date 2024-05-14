@@ -44,6 +44,7 @@ const Home = ({ navigation }) => {
             return;
         }
         console.log('Videos');
+        setIsCameraLibrary(true);
         const saveVideoToApp = async uri => {
             try {
                 const newFilePath = RNFS.DocumentDirectoryPath + `/${Date.now()}.mp4`;

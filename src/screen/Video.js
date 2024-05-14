@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, FlatList, Image, Alert, Button } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import Video from 'react-native-video';
+import { HomeContext } from '../context/HomeProvider';
 const VideoScreen = ({ navigation }) => {
+    const {setIsCameraLibrary} = useContext(HomeContext);
     const [videoPaths, setVideoPaths] = useState([]);
 
     useEffect(() => {
@@ -24,6 +26,7 @@ const VideoScreen = ({ navigation }) => {
     };
 
     const handleChooseVideo = () => {
+        setIsCameraLibrary(true);
         const options = {
             mediaType: 'video',
         };

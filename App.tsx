@@ -15,6 +15,7 @@ import { HomeProvider } from './src/context/HomeProvider';
 import AppNavigation from './src/navigation/AppNavigtion';
 import { ModalPortal } from 'react-native-modals';
 import Login from './src/screen/Login';
+import VnpayExample from './src/screen/VnpayExample';
 function App(): React.JSX.Element {
 
   return (
@@ -23,6 +24,7 @@ function App(): React.JSX.Element {
         <AppNavigation />
         <ModalPortal />
       </HomeProvider>
+      {/* <VnpayExample /> */}
     </SafeAreaView>
   );
 }

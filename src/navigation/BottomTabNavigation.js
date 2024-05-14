@@ -1,13 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React, { useEffect, useState } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Setting from '../screen/Setting';
 import More from '../screen/More';
 import Cloud from '../screen/Cloud';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import HomeStack from '../stack/HomeStack';
-import {AppState} from 'react-native';
+import { AppState } from 'react-native';
+import moment from 'moment';
 const Tab = createBottomTabNavigator();
-const BottomTabNavigation = ({navigation}) => {
+const BottomTabNavigation = ({ navigation }) => {
+  const formattedDateMoment = moment().format('DD/MM/YYYY');
+  console.log('Now is'," "+typeof formattedDateMoment+" "+formattedDateMoment); // string
   useEffect(() => {
     const handleAppStateChange = nextAppState => {
       if (nextAppState === 'background' || nextAppState === 'inactive') {
@@ -37,7 +40,7 @@ const BottomTabNavigation = ({navigation}) => {
         name="HomeStack"
         component={HomeStack}
         options={{
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <AntDesign name="home" color={color} size={30} />
           ),
           tabBarLabel: () => null,
@@ -47,7 +50,7 @@ const BottomTabNavigation = ({navigation}) => {
         name="Setting"
         component={Setting}
         options={{
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <AntDesign name="tool" color={color} size={30} />
           ),
           tabBarLabel: () => null,
@@ -57,7 +60,7 @@ const BottomTabNavigation = ({navigation}) => {
         name="More"
         component={More}
         options={{
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <AntDesign name="ellipsis1" color={color} size={30} />
           ),
           tabBarLabel: () => null,
@@ -67,7 +70,7 @@ const BottomTabNavigation = ({navigation}) => {
         name="Cloud"
         component={Cloud}
         options={{
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" color={color} size={30} />
           ),
           tabBarLabel: () => null,

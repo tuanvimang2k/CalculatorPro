@@ -1,10 +1,11 @@
 import { StyleSheet, View, TouchableOpacity, Image, FlatList, Alert } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import { launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
-
+import { HomeContext } from '../context/HomeProvider';
 const ImageScreen = ({ navigation }) => {
+    const {setIsCameraLibrary} = useContext(HomeContext);
     const [imagePaths, setImagePaths] = useState([]);
     const [oldImagePaths, setOldImagePaths] = useState([]);
     useEffect(() => {
@@ -27,6 +28,7 @@ const ImageScreen = ({ navigation }) => {
     };
 
     const handleChoosePhoto = () => {
+        setIsCameraLibrary(true);
         launchImageLibrary({ mediaType: 'photo', selectionLimit: 0 }, response => {
             if (!response.didCancel) {
                 const selectedImageUris = response.assets.map(asset => asset.uri);

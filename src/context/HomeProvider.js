@@ -15,7 +15,13 @@ export const HomeProvider = props => {
     setUser(null);
   };
   const getPremium = async () => {
+    if (!user) {
+      return;
+    }
     const response = await getUserById(user);
+    if(response){
+      setPremium(response.user.premium)
+    }
   };
   const getPassword = async () => {
     try {
@@ -42,6 +48,7 @@ export const HomeProvider = props => {
       const storedIdUser = await AsyncStorage.getItem('@user');
       if (storedIdUser !== null) {
         setUser(storedIdUser);
+        
       } else {
         // setIdUser('00000');
       }
@@ -60,8 +67,11 @@ export const HomeProvider = props => {
   useEffect(() => {
     getPassword();
     getUser();
+    
   }, []);
-
+  useEffect(() => {
+    getPremium();
+  }, [user]);
   return (
     <HomeContext.Provider
       value={{
