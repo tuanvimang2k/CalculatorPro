@@ -16,15 +16,16 @@ import AppNavigation from './src/navigation/AppNavigtion';
 import { ModalPortal } from 'react-native-modals';
 import Login from './src/screen/Login';
 import VnpayExample from './src/screen/VnpayExample';
+import TestVNpay from './src/screen/TestVNpay';
 function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={{ flex: 1 }} >
-      <HomeProvider>
+      {/* <HomeProvider>
         <AppNavigation />
         <ModalPortal />
-      </HomeProvider>
-      {/* <VnpayExample /> */}
+      </HomeProvider> */}
+      <TestVNpay/>
     </SafeAreaView>
   );
 }
