@@ -1,3 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.vnpay.merchant.lib">
+<activity android:name="your activity"
+android:screenOrientation="portrait">
+<intent-filter>
+<action android:name="android.intent.action.VIEW" />
+<category android:name="android.intent.category.BROWSABLE" />
+<category android:name="android.intent.category.DEFAULT" />
+<data android:scheme="xxxxx" />
+</intent-filter>
+</activity>
 
 </manifest>
